@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Thêm thư viện Chart.js để vẽ biểu đồ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Quản lý Quán Nhậu Quyết C1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="main-title">Quản lý Quán Nhậu - Quyết C1</h1>
+
+        <!-- THANH ĐIỀU HƯỚNG TAB -->
+        <div class="tabs">
+            <button class="tab-link active" data-tab="tab-ban-hang">💰 Bán Hàng</button>
+            <button class="tab-link" data-tab="tab-nhap-kho">📝 Nhập Kho</button>
+            <button class="tab-link" data-tab="tab-quan-ly-menu">🍽️ Quản lý Menu</button>
+            <button class="tab-link" data-tab="tab-quan-ly-ban">🛋️ Quản lý Bàn</button>
+            <button class="tab-link" data-tab="tab-bao-cao">📊 Báo Cáo</button>
+        </div>
+
+        <!-- NỘI DUNG CÁC TAB -->
+
+        <!-- Tab 1: Bán Hàng & Tính Tiền -->
+        <div id="tab-ban-hang" class="tab-content active">
+            <div class="sales-container">
+                <!-- Cột trái: Danh sách các bàn ăn -->
+                <div class="table-grid-container card">
+                    <h2>Danh Sách Bàn</h2>
+                    <div id="danh-sach-ban" class="table-grid">
+                        <!-- Các bàn sẽ được JS tạo ra ở đây -->
+                    </div>
+                </div>
+
+                <!-- Cột phải: Chi tiết gọi món cho bàn được chọn -->
+                <div id="chi-tiet-ban" class="order-details-container">
+                    <div class="card">
+                        <h2>Chi tiết Bàn: <span id="so-ban-hien-tai">Chưa chọn bàn</span></h2>
+                        <div id="form-order-wrapper"> <!-- Wrapper để ẩn/hiện form -->
+                            <form id="form-goi-mon">
+                                <div class="form-group">
+                                    <label for="ten-mon">Tên món</label>
+                                    <input type="text" id="ten-mon" list="danh-sach-mon-an" placeholder="Gõ hoặc chọn món..." required>
+                                    <datalist id="danh-sach-mon-an"></datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="so-luong-mon">Số lượng</label>
+                                    <input type="number" id="so-luong-mon" value="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="don-gia-mon">Đơn giá (VND)</label>
+                                    <input type="number" id="don-gia-mon" placeholder="Ví dụ: 15000" required>
+                                </div>
+                                <button type="submit">Thêm Món</button>
+                            </form>
+                            <hr>
+                            <h3>Danh sách đã gọi:</h3>
+                            <table id="bang-chi-tiet-mon">
+                                <tbody><!-- Chi tiết món ăn sẽ hiện ở đây --></tbody>
+                            </table>
+                            <p class="total">Tạm tính: <strong id="tam-tinh">0 VND</strong></p>
+                            <div class="action-buttons">
+                                <button id="btn-in-hoa-don" class="btn-in-hoa-don">🖨️ In Hóa Đơn</button>
+                                <button id="btn-thanh-toan" class="btn-thanh-toan">Thanh Toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Nhập Kho -->
+        <div id="tab-nhap-kho" class="tab-content">
+            <div class="card">
+                <h2>Thêm Hàng Nhập Mới</h2>
+                <form id="form-nhap-hang">
+                    <div class="form-group">
+                        <label for="ten-san-pham">Tên sản phẩm</label>
+                        <input type="text" id="ten-san-pham" placeholder="Ví dụ: Bia Tiger" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="so-luong">Số lượng</label>
+                        <input type="number" id="so-luong" placeholder="Ví dụ: 2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="don-vi-tinh">Đơn vị tính</label>
+                        <input type="text" id="don-vi-tinh" placeholder="Ví dụ: két, thùng, kg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="don-gia">Đơn giá (VND)</label>
+                        <input type="number" id="don-gia" placeholder="Ví dụ: 250000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nha-cung-cap">Nhà cung cấp (không bắt buộc)</label>
+                        <input type="text" id="nha-cung-cap" placeholder="Ví dụ: Đại lý Hùng Cường">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngay-nhap">Ngày nhập</label>
+                        <input type="date" id="ngay-nhap" required>
+                    </div>
+                    <button type="submit">Lưu Lại</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tab 4: Quản lý Menu -->
+        <div id="tab-quan-ly-menu" class="tab-content">
+            <div class="management-container">
+                <div class="card">
+                    <h2>Thêm Món Mới vào Menu</h2>
+                    <form id="form-them-mon-menu">
+                        <div class="form-group">
+                            <label for="ten-mon-menu">Tên món</label>
+                            <input type="text" id="ten-mon-menu" placeholder="Ví dụ: Cơm rang dưa bò" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gia-mon-menu">Đơn giá (VND)</label>
+                            <input type="number" id="gia-mon-menu" placeholder="Ví dụ: 35000" required>
+                        </div>
+                        <button type="submit">Thêm vào Menu</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h2>Danh Sách Món Ăn Hiện Có</h2>
+                    <table id="bang-quan-ly-menu">
+                        <thead>
+                            <tr>
+                                <th>Tên Món</th>
+                                <th>Đơn Giá</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody><!-- Dữ liệu menu sẽ được chèn vào đây --></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Quản lý Bàn -->
+        <div id="tab-quan-ly-ban" class="tab-content">
+            <div class="management-container">
+                <div class="card">
+                    <h2>Thêm Bàn Mới</h2>
+                    <form id="form-them-ban">
+                        <div class="form-group">
+                            <label for="ten-ban-moi">Tên/Số bàn</label>
+                            <input type="text" id="ten-ban-moi" placeholder="Ví dụ: 13, VIP 3, Sân Thượng" required>
+                        </div>
+                        <button type="submit">Thêm Bàn</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h2>Danh Sách Bàn Hiện Có</h2>
+                    <table id="bang-quan-ly-ban">
+                        <thead>
+                            <tr>
+                                <th>Tên/Số Bàn</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody><!-- Dữ liệu bàn sẽ được chèn vào đây --></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Báo Cáo -->
+        <div id="tab-bao-cao" class="tab-content">
+            <div class="report-container">
+                <div class="card">
+                    <h2>Báo Cáo Tổng Quan</h2>
+                    <div class="filter-group">
+                        <label for="chon-thang-bao-cao">Chọn tháng báo cáo:</label>
+                        <input type="month" id="chon-thang-bao-cao" required>
+                        <button id="btn-xem-bao-cao-tong-quan">Xem</button>
+                    </div>
+                    <hr>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h4>Tổng Doanh Thu</h4>
+                            <p id="stat-doanh-thu">0 VND</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Tổng Chi Phí Nhập</h4>
+                            <p id="stat-chi-phi">0 VND</p>
+                        </div>
+                        <div class="stat-item profit">
+                            <h4>Lợi Nhuận Ước Tính</h4>
+                            <p id="stat-loi-nhuan">0 VND</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Báo Cáo Theo Ngày</h2>
+                    <div class="filter-group">
+                        <label for="chon-ngay-bao-cao">Chọn ngày báo cáo:</label>
+                        <input type="date" id="chon-ngay-bao-cao" required>
+                        <button id="btn-xem-bao-cao-ngay">Xem</button>
+                    </div>
+                    <hr>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h4>Doanh Thu Ngày</h4>
+                            <p id="stat-doanh-thu-ngay">0 VND</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Chi Phí Ngày</h4>
+                            <p id="stat-chi-phi-ngay">0 VND</p>
+                        </div>
+                        <div class="stat-item profit">
+                            <h4>Lợi Nhuận Ngày</h4>
+                            <p id="stat-loi-nhuan-ngay">0 VND</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Biểu Đồ Lợi Nhuận (6 tháng gần nhất)</h2>
+                    <canvas id="profit-chart"></canvas>
+                </div>
+
+                <div class="card">
+                    <h2>Chi Tiết Doanh Thu (Hóa đơn đã thanh toán)</h2>
+                    <div class="filter-group">
+                        <input type="text" id="search-by-table" placeholder="Tìm theo tên bàn...">
+                        <input type="date" id="search-by-date">
+                        <button id="btn-clear-search">Xóa Lọc</button>
+                    </div>
+                    <hr>
+                    <table id="bang-chi-tiet-doanh-thu">
+                        <thead>
+                            <tr>
+                                <th>Ngày Thanh Toán</th>
+                                <th>Bàn</th>
+                                <th>Tổng Tiền</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Chi tiết hóa đơn của tháng đã chọn sẽ hiện ở đây -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h2>Chi Tiết Chi Phí Nhập Kho</h2>
+                    <table id="bang-chi-tiet-chi-phi">
+                        <thead>
+                            <tr>
+                                <th>Ngày Nhập</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Số Lượng</th>
+                                <th>Đơn Vị</th>
+                                <th>Đơn Giá</th>
+                                <th>Thành Tiền</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dữ liệu chi phí sẽ được chèn vào đây -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quan trọng: Script phải có type="module" -->
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

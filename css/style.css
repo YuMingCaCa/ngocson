@@ -1,0 +1,360 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="month"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important */
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-group input {
+    flex-grow: 1;
+}
+
+.filter-group button {
+    width: auto;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ecf0f1;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.total {
+    text-align: right;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+.total strong {
+    color: #e74c3c;
+}
+
+/* --- Styles cho Module Bán Hàng --- */
+.sales-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Cột trái nhỏ, cột phải lớn */
+    gap: 25px;
+    align-items: start; /* Căn các cột theo đỉnh */
+}
+
+.table-grid {
+    display: grid;
+    /* Tự động chia cột, mỗi cột tối thiểu 100px */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+}
+
+.table-item {
+    /* Ghi đè style button mặc định */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Giữ cho nút luôn là hình vuông */
+    font-size: 1.5em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2ecc71; /* Màu xanh: Bàn trống */
+    border: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.table-item:hover {
+    transform: scale(1.05);
+    background-color: #27ae60;
+}
+
+.table-item.occupied {
+    background-color: #e74c3c; /* Màu đỏ: Bàn có khách */
+}
+
+.table-item.occupied:hover {
+    background-color: #c0392b;
+}
+
+.table-item.selected {
+    border-color: #3498db; /* Viền xanh: Bàn đang được chọn */
+    transform: scale(1.1);
+}
+
+#chi-tiet-ban h2 {
+    margin-top: 0;
+}
+
+#form-order-wrapper {
+    display: none; /* Mặc định ẩn form gọi món */
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.action-buttons button {
+    flex-grow: 1;
+    margin-top: 0; /* Ghi đè lại margin của nút con */
+}
+
+.btn-in-hoa-don {
+    background-color: #576574; /* Màu xám trung tính */
+}
+.btn-in-hoa-don:hover {
+    background-color: #2f3542;
+}
+
+.btn-thanh-toan {
+    background-color: #2ecc71; /* Màu xanh lá */
+}
+
+.btn-thanh-toan:hover {
+    background-color: #27ae60;
+}
+
+.btn-xoa-mon {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-xoa-mon:hover {
+    background-color: #c0392b;
+}
+
+.btn-sua-mon {
+    background-color: #f39c12; /* Orange color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-sua-mon:hover {
+    background-color: #e67e22;
+}
+
+ #bang-quan-ly-menu td:last-child,
+#bang-quan-ly-ban td:last-child,
+#bang-chi-tiet-doanh-thu td:last-child,
+#bang-chi-tiet-chi-phi td:last-child {
+    display: flex;
+    gap: 5px;
+}
+
+/* --- Styles cho Tabs --- */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #dfe4ea;
+    margin-bottom: -2px; /* Nâng lên để đè lên border của card */
+    position: relative;
+    z-index: 1;
+}
+
+.tab-link {
+    background-color: #f1f5f8;
+    border: 2px solid transparent;
+    border-bottom: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 20px;
+    transition: 0.3s;
+    font-size: 17px;
+    width: auto; /* Ghi đè lại width 100% mặc định */
+    border-radius: 8px 8px 0 0;
+    margin-right: 5px;
+    color: #576574;
+}
+
+.tab-link:hover {
+    background-color: #e1e5e8;
+}
+
+.tab-link.active {
+    background-color: #ffffff; /* Giống màu nền của card */
+    border-color: #dfe4ea;
+    border-bottom-color: #ffffff; /* Làm cho tab có vẻ như nối liền với nội dung */
+    color: #2c3e50;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* --- Styles cho các trang Quản lý (Menu, Bàn) --- */
+.management-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Chia 2 cột, cột phải to hơn */
+    gap: 25px;
+    align-items: start;
+}
+
+/* --- Styles cho Tab Báo Cáo --- */
+.report-container .card:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    border-left: 5px solid #3498db; /* Blue for revenue */
+}
+
+.stat-item:nth-child(2) {
+    border-left-color: #f39c12; /* Orange for cost */
+}
+
+.stat-item.profit {
+    border-left-color: #2ecc71; /* Green for profit */
+}
+
+.stat-item h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #576574;
+    font-size: 1em;
+}
+
+.stat-item p {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* --- Styles cho nút Xóa Lọc --- */
+#btn-clear-search {
+    background-color: #95a5a6; /* Màu xám trung tính */
+}
+
+#btn-clear-search:hover {
+    background-color: #7f8c8d;
+}
+
+/* --- Styles cho nút In Lại Hóa Đơn --- */
+.btn-in-lai {
+    background-color: #3498db; /* Màu xanh dương */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-in-lai:hover {
+    background-color: #2980b9;
+}
+
+/* --- Styles cho nút Hủy Thanh Toán --- */
+.btn-huy {
+    background-color: #e74c3c; /* Màu đỏ cảnh báo */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-huy:hover {
+    background-color: #c0392b;
+}
