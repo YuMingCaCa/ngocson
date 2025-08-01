@@ -10,7 +10,7 @@ const inputDonGia = document.getElementById('don-gia');
 const inputNhaCungCap = document.getElementById('nha-cung-cap');
 const inputNgayNhap = document.getElementById('ngay-nhap');
 
-async function themLichSuNhapHang(e) {
+async function themLichSuNhapHang(e, onDataChangedCallback) {
   e.preventDefault();
   const soLuong = parseFloat(inputSoLuong.value);
   const donGia = parseFloat(inputDonGia.value);
@@ -34,6 +34,9 @@ async function themLichSuNhapHang(e) {
     alert('Thêm dữ liệu thành công!');
     formNhapHang.reset();
     setInitialDates(); // Đặt lại ngày mặc định sau khi thêm
+    
+    // Gọi hàm callback để thông báo cho app.js biết cần làm mới báo cáo
+    if (onDataChangedCallback) onDataChangedCallback();
   } catch (error) {
     console.error("Lỗi khi thêm dữ liệu: ", error);
     alert('Có lỗi xảy ra, vui lòng thử lại.');
@@ -49,7 +52,7 @@ function setInitialDates() {
 }
 
 // Hàm khởi tạo cho module này
-export function initNhapHang() {
-    if (formNhapHang) formNhapHang.addEventListener('submit', themLichSuNhapHang);
+export function initNhapHang(onDataChangedCallback) {
+    if (formNhapHang) formNhapHang.addEventListener('submit', (e) => themLichSuNhapHang(e, onDataChangedCallback));
     setInitialDates();
 }

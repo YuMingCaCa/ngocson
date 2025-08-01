@@ -63,23 +63,34 @@ async function xoaBan(e) {
  * Render lại bảng quản lý bàn.
  */
 function renderBangQuanLyBan(snapshot) {
-    bangQuanLyBanBody.innerHTML = '';
+    if (bangQuanLyBanBody) {
+        bangQuanLyBanBody.innerHTML = '';
+    }
     danhSachBanData = snapshot.docs.map(doc => doc.data().ten_ban); // Cập nhật lại danh sách bàn
 
     snapshot.forEach(doc => {
         const ban = doc.data();
         const banId = doc.id;
-        const row = bangQuanLyBanBody.insertRow();
-        row.innerHTML = `
-            <td>${ban.ten_ban}</td>
-            <td><button class="btn-xoa-mon" data-id="${banId}" data-ten="${ban.ten_ban}">Xóa</button></td>
-        `;
+        if (bangQuanLyBanBody) {
+            const row = bangQuanLyBanBody.insertRow();
+            row.innerHTML = `
+                <td>${ban.ten_ban}</td>
+                <td><button class="btn-xoa-mon" data-id="${banId}" data-ten="${ban.ten_ban}">Xóa</button></td>
+            `;
+        }
     });
 }
 
-export function initBan() {
+export function initBan(onTablesChangeCallback) {
     const q = query(collection(db, 'restaurants', RESTAURANT_ID, 'tables'), orderBy('ten_ban'));
-    onSnapshot(q, renderBangQuanLyBan);
+    onSnapshot(q, (snapshot) => {
+        // 1. Render bảng quản lý bàn ở tab "Quản lý Bàn"
+        renderBangQuanLyBan(snapshot);
+        // 2. Gọi callback để render lại lưới bàn ở tab "Bán Hàng"
+        if (onTablesChangeCallback) {
+            onTablesChangeCallback();
+        }
+    });
 
     if (formThemBan) formThemBan.addEventListener('submit', themBanMoi);
     if (bangQuanLyBanBody) bangQuanLyBanBody.addEventListener('click', xoaBan);

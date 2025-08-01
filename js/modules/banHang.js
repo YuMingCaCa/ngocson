@@ -32,7 +32,7 @@ let donHangCuaCacBan = new Map(); // Lưu trạng thái tất cả các bàn đa
 /**
  * Vẽ lại toàn bộ lưới bàn ăn dựa trên trạng thái mới nhất.
  */
-function renderLuoiBanAn() {
+export function renderLuoiBanAn() {
     danhSachBanDiv.innerHTML = ''; // Xóa các bàn cũ
     danhSachBanData.forEach(soBan => {
         const banElement = document.createElement('button');
@@ -331,6 +331,8 @@ async function thanhToan() {
             formOrderWrapper.style.display = 'none';
             renderLuoiBanAn();
 
+            // Gọi hàm callback để thông báo cho app.js biết cần làm mới báo cáo
+            if (onSaleCompletedCallback) onSaleCompletedCallback();
         } catch (error) {
             console.error("Lỗi khi thanh toán: ", error);
         }
@@ -341,7 +343,7 @@ async function thanhToan() {
 // --- KHỞI TẠO MODULE ---
 // =================================================================
 
-export function initBanHang() {
+export function initBanHang(onSaleCompletedCallback) {
     // Vẽ lưới bàn ăn lần đầu tiên khi tải trang
     renderLuoiBanAn();
 
@@ -384,5 +386,5 @@ export function initBanHang() {
     formGoiMon.addEventListener('submit', themMon);
     bangChiTietMonBody.addEventListener('click', xoaMon);
     btnInHoaDon.addEventListener('click', inHoaDon);
-    btnThanhToan.addEventListener('click', thanhToan);
+    btnThanhToan.addEventListener('click', () => thanhToan(onSaleCompletedCallback));
 }

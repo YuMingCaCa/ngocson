@@ -1,7 +1,6 @@
 import { db, collection, query, where, getDocs, Timestamp, orderBy, doc, updateDoc, deleteDoc } from '../config/firebase.js';
 import { RESTAURANT_ID } from '../config.js';
 import { currencyFormatter } from '../utils/formatters.js';
-import { generateAndPrintInvoice, huyThanhToan } from './banHang.js';
 
 // --- Lấy các phần tử HTML ---
 const inputChonThangBaoCao = document.getElementById('chon-thang-bao-cao');
@@ -83,7 +82,7 @@ function renderSalesDetailTable(docsToRender) {
 /**
  * Hiển thị báo cáo tổng quan (doanh thu, chi phí, lợi nhuận) cho tháng được chọn.
  */
-async function hienThiBaoCaoTongQuan() {
+export async function hienThiBaoCaoTongQuan() {
     const [year, month] = inputChonThangBaoCao.value.split('-').map(Number);
     if (!year || !month) return;
 
@@ -228,7 +227,7 @@ async function xoaChiPhi(e) {
 /**
  * Hiển thị báo cáo (doanh thu, chi phí, lợi nhuận) cho ngày được chọn.
  */
-async function hienThiBaoCaoNgay() {
+export async function hienThiBaoCaoNgay() {
     const selectedDateValue = inputChonNgayBaoCao.value;
     if (!selectedDateValue) return;
 
@@ -254,7 +253,7 @@ async function hienThiBaoCaoNgay() {
 /**
  * Lấy dữ liệu và vẽ biểu đồ lợi nhuận 6 tháng gần nhất.
  */
-async function hienThiBieuDoLoiNhuan() {
+export async function hienThiBieuDoLoiNhuan() {
     const labels = [];
     const profitData = [];
     const now = new Date();
@@ -348,9 +347,19 @@ function setInitialReportDate() {
 }
 
 /**
+ * Tải tất cả dữ liệu cần thiết cho tab báo cáo.
+ * Hàm này chỉ nên được gọi một lần khi người dùng mở tab.
+ */
+export function loadBaoCaoData() {
+    hienThiBaoCaoTongQuan();
+    hienThiBaoCaoNgay();
+    hienThiBieuDoLoiNhuan();
+}
+
+/**
  * Hàm khởi tạo cho module báo cáo.
  */
-export function initBaoCao() {
+export function initBaoCao({ onCancelInvoice, onPrintInvoice }) {
     setInitialReportMonth();
     setInitialReportDate();
 
@@ -372,7 +381,7 @@ export function initBaoCao() {
             const docId = e.target.dataset.id;
             const hoaDonDoc = currentMonthSalesDocs.find(doc => doc.id === docId);
             if (hoaDonDoc) {
-                generateAndPrintInvoice(hoaDonDoc.data());
+                if (onPrintInvoice) onPrintInvoice(hoaDonDoc.data());
             }
         }
         if (e.target.classList.contains('btn-huy')) {
@@ -381,7 +390,7 @@ export function initBaoCao() {
             if (hoaDonDoc) {
                 const hoaDonData = hoaDonDoc.data();
                 if (confirm(`Bạn có chắc chắn muốn HỦY hóa đơn cho bàn "${hoaDonData.ten_ban}" không?\n\nHành động này sẽ mở lại bàn và xóa hóa đơn khỏi lịch sử.`)) {
-                    huyThanhToan(docId, hoaDonData).then(success => {
+                    if (onCancelInvoice) onCancelInvoice(docId, hoaDonData).then(success => {
                         // Nếu hủy thành công, tải lại báo cáo để cập nhật
                         if (success) hienThiBaoCaoTongQuan();
                     });
@@ -395,10 +404,4 @@ export function initBaoCao() {
         searchByDateInput.value = '';
         filterAndRenderSales();
     });
-
-    // Tải dữ liệu lần đầu khi mở tab Báo cáo
-    // Lưu ý: Các hàm này sẽ chạy ngay khi trang được tải, có thể gây nhiều lượt đọc DB ban đầu.
-    hienThiBaoCaoTongQuan();
-    hienThiBaoCaoNgay();
-    hienThiBieuDoLoiNhuan();
 }
