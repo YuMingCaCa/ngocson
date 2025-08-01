@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Sử Dụng</title>
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hướng Dẫn Sử Dụng Phần Mềm Quản Lý Nhà Hàng</h1>
+            <a href="index.html" class="back-link">Quay lại trang Quản lý</a>
+        </header>
+
+        <main>
+            <section id="ban-hang" class="card">
+                <h2>💰 Tab Bán Hàng</h2>
+                <p>Đây là màn hình chính bạn sẽ sử dụng thường xuyên nhất để ghi nhận đơn hàng và thanh toán cho khách.</p>
+                
+                <h3>Giao diện chính</h3>
+                <p>Màn hình được chia làm 2 phần:</p>
+                <ul>
+                    <li><strong>Bên trái (Danh Sách Bàn):</strong> Hiển thị tất cả các bàn trong quán của bạn.
+                        <ul>
+                            <li>Bàn màu xám: Bàn trống, sẵn sàng đón khách.</li>
+                            <li>Bàn màu cam: Bàn đang có khách ngồi.</li>
+                            <li>Bàn màu xanh lá: Bàn bạn đang chọn để thao tác.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bên phải (Chi tiết Bàn):</strong> Hiển thị thông tin gọi món của bàn đang được chọn.</li>
+                </ul>
+
+                <h3>Cách gọi món cho khách</h3>
+                <ol>
+                    <li><strong>Chọn bàn:</strong> Nhấn vào một bàn <strong>màu xám</strong> ở cột bên trái. Bàn đó sẽ chuyển sang <strong>màu xanh lá</strong> và form gọi món sẽ hiện ra bên phải.</li>
+                    <li><strong>Thêm món:</strong>
+                        <ul>
+                            <li>Tại ô <strong>Tên món</strong>, bạn bắt đầu gõ tên món ăn. Phần mềm sẽ tự động gợi ý các món đã có trong menu.</li>
+                            <li>Khi bạn chọn một món từ danh sách gợi ý, <strong>Đơn giá</strong> sẽ được tự động điền.</li>
+                            <li>Nhập <strong>Số lượng</strong> khách gọi.</li>
+                            <li>Nhấn nút <strong>"Thêm Món"</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Món ăn sẽ ngay lập tức xuất hiện trong bảng "Danh sách đã gọi" bên dưới. Lặp lại bước 2 để thêm các món khác.</li>
+                </ol>
+
+                <h3>Sửa hoặc xóa một món đã gọi</h3>
+                <ul>
+                    <li><strong>Xóa món:</strong> Nếu nhập sai, bạn chỉ cần nhấn nút <strong>"Xóa"</strong> ở cuối dòng của món ăn đó trong "Danh sách đã gọi".</li>
+                </ul>
+
+                <h3>In hóa đơn tạm tính</h3>
+                <p>Trước khi khách thanh toán, bạn có thể in hóa đơn tạm tính để khách kiểm tra bằng cách nhấn vào nút <strong>"🖨️ In Hóa Đơn"</strong>. Một cửa sổ mới để in sẽ hiện ra.</p>
+
+                <h3>Thanh toán</h3>
+                <ol>
+                    <li>Kiểm tra lại các món ăn và tổng tiền ("Tạm tính") một lần cuối.</li>
+                    <li>Nhấn nút <strong>"Thanh Toán"</strong>.</li>
+                    <li>Một hộp thoại sẽ hiện ra liệt kê chi tiết hóa đơn. Hãy xác nhận lại với khách.</li>
+                    <li>Nhấn <strong>"OK"</strong> để hoàn tất thanh toán.</li>
+                    <li>Sau khi thanh toán thành công, bàn sẽ tự động chuyển về trạng thái trống (màu xám), sẵn sàng cho lượt khách tiếp theo.</li>
+                </ol>
+            </section>
+
+            <section id="nhap-kho" class="card">
+                <h2>📝 Tab Nhập Kho</h2>
+                <p>Tab này giúp bạn ghi lại tất cả các chi phí nhập hàng hóa, nguyên vật liệu. Việc ghi chép cẩn thận ở đây sẽ giúp cho việc báo cáo lợi nhuận ở cuối tháng được chính xác.</p>
+                <ol>
+                    <li>Điền đầy đủ các thông tin vào form:
+                        <ul>
+                            <li><strong>Tên sản phẩm:</strong> Ví dụ: Bia Tiger, Gạo, Thịt bò...</li>
+                            <li><strong>Số lượng:</strong> Ví dụ: 2, 10, 5...</li>
+                            <li><strong>Đơn vị tính:</strong> Ví dụ: két, kg, thùng...</li>
+                            <li><strong>Đơn giá:</strong> Giá của một đơn vị (ví dụ: giá 1 két bia).</li>
+                            <li><strong>Nhà cung cấp (không bắt buộc):</strong> Tên nơi bạn mua hàng.</li>
+                            <li><strong>Ngày nhập:</strong> Chọn ngày bạn nhập hàng.</li>
+                        </ul>
+                    </li>
+                    <li>Nhấn nút <strong>"Lưu Lại"</strong>.</li>
+                </ol>
+            </section>
+
+            <section id="quan-ly-menu" class="card">
+                <h2>🍽️ Tab Quản lý Menu</h2>
+                <p>Đây là nơi bạn quản lý danh sách các món ăn và giá cả của quán.</p>
+                <ul>
+                    <li><strong>Thêm món mới:</strong> Ở khung bên trái, nhập <strong>Tên món</strong> và <strong>Đơn giá</strong>, sau đó nhấn <strong>"Thêm vào Menu"</strong>.</li>
+                    <li><strong>Sửa giá món:</strong> Ở bảng "Danh Sách Món Ăn Hiện Có" bên phải, tìm món cần sửa và nhấn nút <strong>"Sửa"</strong>. Một hộp thoại sẽ hiện ra để bạn nhập giá mới.</li>
+                    <li><strong>Xóa món:</strong> Nhấn nút <strong>"Xóa"</strong> bên cạnh món ăn bạn không còn bán nữa.</li>
+                </ul>
+            </section>
+
+            <section id="quan-ly-ban" class="card">
+                <h2>🛋️ Tab Quản lý Bàn</h2>
+                <p>Nơi bạn thêm hoặc bớt số lượng bàn cho quán.</p>
+                <ul>
+                    <li><strong>Thêm bàn mới:</strong> Ở khung bên trái, nhập <strong>Tên/Số bàn</strong> (ví dụ: "15", "VIP 2", "Sân Vườn 1") và nhấn <strong>"Thêm Bàn"</strong>.</li>
+                    <li><strong>Xóa bàn:</strong> Ở danh sách bên phải, nhấn nút <strong>"Xóa"</strong> tại bàn bạn muốn loại bỏ.
+                        <ul>
+                            <li><strong>Lưu ý:</strong> Hãy cẩn thận khi xóa bàn, đặc biệt là khi quán đang hoạt động.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="bao-cao" class="card">
+                <h2>📊 Tab Báo Cáo</h2>
+                <p>Đây là công cụ mạnh mẽ nhất giúp bạn nắm bắt tình hình kinh doanh của quán.<br><em>(Lưu ý: Lần đầu tiên bạn nhấn vào tab này, hệ thống có thể mất vài giây để tải toàn bộ dữ liệu).</em></p>
+                
+                <h3>Báo cáo tổng quan (Theo tháng)</h3>
+                <ol>
+                    <li>Tại mục "Chọn tháng báo cáo", hãy chọn tháng bạn muốn xem.</li>
+                    <li>Nhấn nút <strong>"Xem"</strong>.</li>
+                    <li>Các ô <strong>Tổng Doanh Thu</strong>, <strong>Tổng Chi Phí Nhập</strong>, và <strong>Lợi Nhuận Ước Tính</strong> của tháng đó sẽ được hiển thị.</li>
+                </ol>
+
+                <h3>Báo cáo theo ngày</h3>
+                <ol>
+                    <li>Tại mục "Chọn ngày báo cáo", hãy chọn ngày cụ thể bạn muốn xem.</li>
+                    <li>Nhấn nút <strong>"Xem"</strong>.</li>
+                    <li>Các ô thống kê doanh thu, chi phí, lợi nhuận của riêng ngày đó sẽ hiện ra.</li>
+                </ol>
+
+                <h3>Biểu đồ lợi nhuận</h3>
+                <p>Biểu đồ này tự động hiển thị lợi nhuận của 6 tháng gần nhất, giúp bạn có cái nhìn trực quan về xu hướng kinh doanh.</p>
+
+                <h3>Chi tiết Doanh thu</h3>
+                <p>Bảng này liệt kê <strong>tất cả các hóa đơn đã thanh toán</strong> trong tháng bạn đã chọn ở trên.</p>
+                <ul>
+                    <li><strong>Tìm kiếm:</strong> Bạn có thể tìm nhanh một hóa đơn bằng cách gõ tên bàn hoặc chọn ngày thanh toán trong các ô lọc.</li>
+                    <li><strong>In lại hóa đơn:</strong> Nhấn nút <strong>"In Lại"</strong> ở hóa đơn bất kỳ để in lại hóa đơn đó.</li>
+                    <li><strong>Hủy hóa đơn (Chức năng quan trọng):</strong> Trong trường hợp thanh toán nhầm, bạn có thể nhấn nút <strong>"Hủy"</strong>. Thao tác này sẽ:
+                        <ol>
+                            <li>Xóa hóa đơn khỏi lịch sử doanh thu.</li>
+                            <li>Mở lại bàn đó với đầy đủ các món ăn như trước khi thanh toán.</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <h3>Chi tiết Chi phí Nhập kho</h3>
+                <p>Bảng này liệt kê tất cả các khoản chi phí bạn đã nhập trong tab "Nhập Kho" của tháng đang xem.</p>
+                <p>Bạn có thể <strong>"Sửa"</strong> hoặc <strong>"Xóa"</strong> một khoản chi phí nếu đã nhập sai. Các thay đổi sẽ được tự động cập nhật vào báo cáo tổng.</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
