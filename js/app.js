@@ -1,6 +1,6 @@
 import { RESTAURANT_NAME } from './config.js';
 import { initNhapHang } from './modules/nhapHang.js';
-import { initBanHang, renderLuoiBanAn, huyThanhToan } from './modules/banHang.js';
+import { initBanHang, renderLuoiBanAn, huyThanhToan, generateAndPrintInvoice } from './modules/banHang.js';
 import { initMenu } from './modules/menu.js';
 import { initBaoCao, loadBaoCaoData, hienThiBaoCaoTongQuan, hienThiBaoCaoNgay, hienThiBieuDoLoiNhuan } from './modules/baoCao.js';
 import { initBan } from './modules/ban.js';
@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Truyền hàm cập nhật báo cáo vào module Bán Hàng
     initBanHang(refreshAllReports);
 
-    // Truyền hàm hủy thanh toán vào module Báo Cáo
-    initBaoCao({ onCancelInvoice: huyThanhToan });
+    // Truyền các hàm cần thiết vào module Báo Cáo
+    initBaoCao({ onCancelInvoice: huyThanhToan, onPrintInvoice: generateAndPrintInvoice });
 });
 
 function initTabs() {
@@ -67,9 +67,10 @@ function initTabs() {
  * Cập nhật các tiêu đề của trang web dựa trên tên nhà hàng trong config.
  */
 function updatePageTitles() {
-    document.title = `Quản lý - ${RESTAURANT_NAME}`;
+    const title = `Quản lý - ${RESTAURANT_NAME}`;
+    document.title = title;
     const mainTitleElement = document.getElementById('main-title');
     if (mainTitleElement) {
-        mainTitleElement.textContent = `Quản lý - ${RESTAURANT_NAME}`;
+        mainTitleElement.textContent = title;
     }
 }
